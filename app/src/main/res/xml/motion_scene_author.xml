@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+    <Transition
+        android:id="@+id/swipeImageTransition"
+        motion:constraintSetStart="@id/authorImageStart"
+        motion:constraintSetEnd="@id/authorImageEnd"
+        motion:duration="3000"
+        motion:motionInterpolator="linear">
+        <OnSwipe
+            motion:touchAnchorId="@id/authorImage"
+            motion:touchAnchorSide="top"
+            motion:dragDirection="dragUp" />
+    </Transition>
+    <ConstraintSet android:id="@+id/authorImageStart">
+        <Constraint
+            android:id="@id/back_guideline"
+            motion:progress="0"
+            android:orientation="horizontal"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintGuide_percent="0.3"></Constraint>
+        <Constraint
+            android:id="@id/author_image_guideline"
+            motion:progress="0"
+            android:orientation="horizontal"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintGuide_percent="0.35"></Constraint>
+        <Constraint
+            android:id="@id/authorImage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            motion:progress="0"
+            android:alpha="1"
+            motion:layout_constraintBottom_toTopOf="@id/author_image_guideline"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"></Constraint>
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/authorImageEnd">
+        <Constraint
+            android:id="@id/back_guideline"
+            motion:progress="1"
+            android:orientation="horizontal"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintGuide_percent="0.0"></Constraint>
+        <Constraint
+            android:id="@id/author_image_guideline"
+            motion:progress="1"
+            android:orientation="horizontal"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintGuide_percent="0.0"></Constraint>
+        <Constraint
+            android:id="@id/authorImage"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            motion:progress="1"
+            android:alpha="0"
+            motion:layout_constraintBottom_toTopOf="@id/author_image_guideline"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"></Constraint>
+    </ConstraintSet>
+</MotionScene>
