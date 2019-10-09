@@ -8,7 +8,8 @@
     android:elevation="0dp"
     android:orientation="vertical"
     app:layoutDescription="@xml/motion_scene_author"
-    app:showPaths="false">
+    app:showPaths="false"
+    android:background="@android:color/white">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/back_guideline"
@@ -112,7 +113,7 @@
         android:clickable="true"
         android:focusable="true"
         android:textColor="@color/color_clickable_secondary_text"
-        app:layout_constraintEnd_toEndOf="@+id/authorName"
+        app:layout_constraintEnd_toEndOf="@id/authorName"
         app:layout_constraintStart_toStartOf="@id/authorName"
         app:layout_constraintTop_toBottomOf="@id/likes" />
 

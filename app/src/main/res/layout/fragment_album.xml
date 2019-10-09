@@ -8,7 +8,8 @@
     android:orientation="vertical"
     android:elevation="0dp"
     app:layoutDescription="@xml/motion_scene_album"
-    app:showPaths="false">
+    app:showPaths="false"
+    android:background="@android:color/white">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/album_image_guideline"

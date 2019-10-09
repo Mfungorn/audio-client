@@ -1,41 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:background="@android:color/white"
+        android:elevation="8dp">
+
+        <TextView
+            android:id="@+id/trackName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Track Name"
+            android:textColor="@color/color_clickable_primary_text"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ToggleButton
+            android:id="@+id/likeButton"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/selector_like_button"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:textOff=""
+            android:textOn=""
+            app:layout_constraintBottom_toBottomOf="@id/trackName"
+            app:layout_constraintEnd_toStartOf="@id/duration"
+            app:layout_constraintTop_toTopOf="@id/trackName" />
+
+        <TextView
+            android:id="@+id/duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:text="4:20"
+            app:layout_constraintBottom_toBottomOf="@id/trackName"
+            app:layout_constraintEnd_toStartOf="@id/closeTextButton"
+            app:layout_constraintTop_toTopOf="@id/trackName" />
+
+        <ImageButton
+            android:id="@+id/closeTextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginEnd="16dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="@id/trackName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/trackName"
+            app:srcCompat="@drawable/ic_close_black_24dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/trackName"
-        android:layout_width="wrap_content"
+        android:id="@+id/trackText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Track Name"
-        android:textSize="16sp"
-        android:layout_centerVertical="true"
-        android:clickable="true"
-        android:focusable="true"
-        android:textColor="@color/color_clickable_primary_text" />
-
-    <ToggleButton
-        android:id="@+id/likeButton"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_toStartOf="@+id/duration"
-        android:align="@id/duration"
-        android:layout_marginEnd="32dp"
-        android:layout_centerVertical="true"
-        android:background="@drawable/selector_like_button"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:textOff=""
-        android:textOn="" />
-
-    <TextView
-        android:id="@+id/duration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:text="4:20" />
-</RelativeLayout>
+        android:layout_marginStart="16dp"
+        android:textColor="@color/colorSecondaryText"
+        android:textSize="14sp"
+        android:visibility="gone"
+        android:elevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/duration"
+        app:layout_constraintStart_toStartOf="@id/trackName"
+        app:layout_constraintTop_toBottomOf="@id/trackName"
+        tools:text="@string/lorem" />
+</LinearLayout>

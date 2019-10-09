@@ -8,13 +8,18 @@ object Coroutines {
             work()
         }
 
-    fun <T : Any> ioThenMain(work: suspend (() -> T?), callback: ((T?) -> Unit)? = null): Job =
-        CoroutineScope(Dispatchers.Main).launch {
+    fun <T : Any> ioThenMain(
+        work: suspend (() -> T?),
+        onSuccess: ((T?) -> Unit)? = null,
+        onError: ((Throwable) -> Unit)? = null
+    ): Job = CoroutineScope(Dispatchers.Main).launch {
+        try {
             val data = CoroutineScope(Dispatchers.IO).async {
                 return@async work()
             }.await()
-            callback?.let {
-                it(data)
-            }
+            onSuccess?.let { it(data) }
+        } catch (t: Throwable) {
+            onError?.let { it(t) }
         }
+    }
 }
