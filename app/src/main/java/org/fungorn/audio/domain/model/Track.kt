@@ -6,5 +6,8 @@ data class Track(
     val duration: Int,
     val text: String = "",
     val price: Int,
-    val rating: Int
+    val rating: Int,
+    val cover: String?,
+    val authorName: String,
+    val genre: String
 )

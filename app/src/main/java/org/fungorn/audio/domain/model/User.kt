@@ -5,5 +5,6 @@ data class User(
     val name: String,
     val email: String,
     var phone: String = "",
-    var balance: Int = 0
+    var balance: Int = 0,
+    val icon: String?
 )

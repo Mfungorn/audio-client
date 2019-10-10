@@ -17,6 +17,9 @@ interface TrackDao {
     @Update
     fun update(entity: TrackEntity)
 
+    @Query("SELECT COUNT(*) FROM track WHERE id = :id")
+    fun count(id: Long): Int
+
     @Delete
     fun delete(entity: TrackEntity)
 

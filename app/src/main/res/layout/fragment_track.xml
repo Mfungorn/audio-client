@@ -155,4 +155,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/buyTrackButton" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyle"
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/dot_divider"
+        app:layout_constraintEnd_toEndOf="@id/likeButton"
+        app:layout_constraintStart_toStartOf="@id/likes"
+        app:layout_constraintTop_toTopOf="@id/dot_divider" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,7 +27,7 @@ class LoginViewModel(
         val request = LoginRequest(login, password)
         Coroutines.ioThenMain({
             val token = api.signIn(request)
-            sharedPreferencesEditor.putString("token", token)
+            sharedPreferencesEditor.putString("token", token.substringAfter("Bearer "))
             favoritesApi.loadFavorites()
         },
             onSuccess = {

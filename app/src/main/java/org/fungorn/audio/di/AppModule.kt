@@ -9,15 +9,19 @@ import org.fungorn.audio.data.db.repository.TrackRepository
 import org.fungorn.audio.ui.auth.LoginViewModel
 import org.fungorn.audio.ui.favorites.FavoritesViewModel
 import org.fungorn.audio.ui.main.MainViewModel
+import org.fungorn.audio.ui.profile.ProfileViewModel
 import org.fungorn.audio.ui.search.SearchViewModel
+import org.fungorn.audio.ui.track.TrackViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 private var appModule = module {
-    viewModel { FavoritesViewModel() }
-    viewModel { MainViewModel() }
-    viewModel { SearchViewModel() }
+    viewModel { FavoritesViewModel(get(), get()) }
+    viewModel { MainViewModel(get(), get(), get()) }
+    viewModel { SearchViewModel(get(), get(), get()) }
+    viewModel { ProfileViewModel(get(), get()) }
+    viewModel { TrackViewModel(get(), get()) }
     viewModel { LoginViewModel(get(), get(), get(), get(), get()) }
 
     single {

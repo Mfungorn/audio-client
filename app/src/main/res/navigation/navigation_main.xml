@@ -9,17 +9,58 @@
         android:id="@+id/navigation_home"
         android:name="org.fungorn.audio.ui.main.MainFragment"
         android:label="@string/title_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_navigation_home_to_authorFragment"
+            app:destination="@id/authorFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_favorite"
         android:name="org.fungorn.audio.ui.favorites.FavoritesFragment"
         android:label="@string/title_favorites"
-        tools:layout="@layout/fragment_author" />
+        tools:layout="@layout/fragment_favorites">
+        <action
+            android:id="@+id/action_navigation_favorite_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_navigation_favorite_to_favoriteTracksListFragment"
+            app:destination="@id/favoriteTracksListFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_search"
         android:name="org.fungorn.audio.ui.search.SearchFragment"
         android:label="@string/title_search"
-        tools:layout="@layout/fragment_album" />
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/authorFragment"
+        android:name="org.fungorn.audio.ui.author.AuthorFragment"
+        android:label="AuthorFragment"
+        tools:layout="@layout/fragment_author">
+        <action
+            android:id="@+id/action_authorFragment_to_trackFragment"
+            app:destination="@id/trackFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="org.fungorn.audio.ui.profile.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/trackFragment"
+        android:name="org.fungorn.audio.ui.track.TrackFragment"
+        android:label="TrackFragment"
+        tools:layout="@layout/fragment_track" />
+    <fragment
+        android:id="@+id/favoriteTracksListFragment"
+        android:name="org.fungorn.audio.ui.favorites.FavoriteTracksListFragment"
+        android:label="FavoriteTracksListFragment">
+        <action
+            android:id="@+id/action_favoriteTracksListFragment_to_trackFragment"
+            app:destination="@id/trackFragment" />
+    </fragment>
 </navigation>

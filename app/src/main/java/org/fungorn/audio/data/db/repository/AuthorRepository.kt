@@ -9,6 +9,8 @@ class AuthorRepository(
 ) {
     fun add(author: Author) = authorDao.insert(toAuthorEntity(author))
     fun getAll() = authorDao.getAll().map { toAuthorModel(it) }
+    fun existsById(id: Long) = authorDao.count(id) > 0
+    fun existsByName(name: String) = authorDao.count(name) > 0
     fun deleteAll() = authorDao.deleteAll()
 
     private fun toAuthorEntity(author: Author) = AuthorEntity(

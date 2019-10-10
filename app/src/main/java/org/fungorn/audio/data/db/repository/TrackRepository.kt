@@ -9,6 +9,7 @@ class TrackRepository(
 ) {
     fun add(track: Track) = trackDao.insert(toTrackEntity(track))
     fun getAll() = trackDao.getAll().map { toTrackModel(it) }
+    fun existsById(id: Long) = trackDao.count(id) > 0
     fun deleteAll() = trackDao.deleteAll()
 
     private fun toTrackEntity(track: Track) = TrackEntity(

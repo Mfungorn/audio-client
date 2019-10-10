@@ -1,4 +1,4 @@
-package org.fungorn.audio.ui.favorites
+package org.fungorn.audio.ui.album
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,68 +10,76 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_favorites.*
+import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.fragment_album.*
 import org.fungorn.audio.R
-import org.fungorn.audio.ui.utils.AuthorAdapter
+import org.fungorn.audio.ui.utils.TrackAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class FavoritesFragment : Fragment() {
-    private val viewModel: FavoritesViewModel by viewModel()
+class AlbumFragment : Fragment() {
+    private val viewModel: AlbumViewModel by viewModel()
 
-    private var authorAdapter: AuthorAdapter? = null
+    private var trackAdapter: TrackAdapter? = null
+
+    private var id: Long? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel.loadFavorites()
-        val root = inflater.inflate(R.layout.fragment_favorites, container, false)
+        id = arguments?.getLong("author_id")
+        id?.let {
+            viewModel.getAlbum(it)
+        }
+        viewModel.getContent()
+
+        val root = inflater.inflate(R.layout.fragment_author, container, false)
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        authorAdapter = AuthorAdapter {
-            findNavController().navigate(R.id.authorFragment, bundleOf("author_id" to it.id))
+        trackAdapter = TrackAdapter {
+            findNavController().navigate(R.id.trackFragment, bundleOf("track_id" to it.id))
         }
-        favAuthorsList.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = authorAdapter
-        }
-
-        profile.setOnClickListener {
-            findNavController().navigate(R.id.profileFragment)
+        tracksList.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = trackAdapter
         }
 
-        favTracksButton.setOnClickListener {
-            findNavController().navigate(R.id.favoriteTracksListFragment)
+        genre.setOnClickListener {
+            // TODO: Navigate to albums with this genres
         }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.authors.observe(viewLifecycleOwner, Observer {
-            authorAdapter?.submitAuthors(it)
+
+        viewModel.album.observe(viewLifecycleOwner, Observer {
+            Glide.with(this)
+                .load(it.cover)
+                .centerCrop()
+                .fallback(R.drawable.ic_album_primary_150dp)
+                .error(R.drawable.ic_album_primary_150dp)
+                .into(albumImage)
+            albumName.text = it.title
+            likes.text = it.rating.toString()
         })
 
         viewModel.tracks.observe(viewLifecycleOwner, Observer {
-            trackCount.text = it.size.toString()
+            trackAdapter?.submitTracks(it)
         })
 
         viewModel.isLoading.observe(viewLifecycleOwner, Observer {
             when (it) {
                 true -> {
-                    profile.isEnabled = false
-                    favTracksButton.isEnabled = false
-                    progress.visibility = View.VISIBLE
+                    likeButton.isEnabled = false
                 }
                 false -> {
-                    progress.visibility = View.GONE
-                    profile.isEnabled = true
-                    favTracksButton.isEnabled = true
+                    likeButton.isEnabled = true
                 }
             }
         })
