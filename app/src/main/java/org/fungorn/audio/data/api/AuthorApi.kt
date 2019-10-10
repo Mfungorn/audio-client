@@ -7,6 +7,7 @@ class AuthorApi(
     private val client: HttpClient
 ) {
     suspend fun getAuthor(authorId: Long) = null
+
     suspend fun getAuthorByName(name: String) = null
 
     suspend fun getAuthors(): List<Author> = listOf()

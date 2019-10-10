@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_track.*
 import org.fungorn.audio.R
@@ -36,11 +39,19 @@ class TrackFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         author.setOnClickListener {
-            // TODO: Navigate Author by name
+            val name = (it as TextView).text.toString()
+            findNavController().navigate(R.id.authorFragment, bundleOf("author_name" to name))
         }
 
         genre.setOnClickListener {
-            // TODO: Navigate to genre track list (?)
+            val genreName = (it as TextView).text.toString()
+            findNavController().navigate(
+                R.id.genresFragment,
+                bundleOf(
+                    "genre_name" to genreName,
+                    "type" to "track"
+                )
+            )
         }
 
         buyTrackButton.setOnClickListener {
@@ -95,19 +106,3 @@ class TrackFragment : Fragment() {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }
-
-// TODO: init Tab in Author Fragment
-//        fragment_author
-//        tab.setup()
-//        var ts = tab.newTabSpec("about")
-//        ts.setContent(R.id.about)
-//        ts.setIndicator("about")
-//        tab.addTab(ts)
-//        ts = tab.newTabSpec("tracks")
-//        ts.setContent(R.id.tracks)
-//        ts.setIndicator("tracks")
-//        tab.addTab(ts)
-//        ts = tab.newTabSpec("albums")
-//        ts.setContent(R.id.albums)
-//        ts.setIndicator("albums")
-//        tab.addTab(ts)

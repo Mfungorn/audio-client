@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -23,19 +24,24 @@ class AlbumFragment : Fragment() {
     private var trackAdapter: TrackAdapter? = null
 
     private var id: Long? = null
+    private var name: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        id = arguments?.getLong("author_id")
+        id = arguments?.getLong("album_id")
         id?.let {
+            viewModel.getAlbum(it)
+        }
+        name = arguments?.getString("album_name")
+        name?.let {
             viewModel.getAlbum(it)
         }
         viewModel.getContent()
 
-        val root = inflater.inflate(R.layout.fragment_author, container, false)
+        val root = inflater.inflate(R.layout.fragment_album, container, false)
         return root
     }
 
@@ -51,7 +57,14 @@ class AlbumFragment : Fragment() {
         }
 
         genre.setOnClickListener {
-            // TODO: Navigate to albums with this genres
+            val name = (it as TextView).text.toString()
+            findNavController().navigate(
+                R.id.genresFragment,
+                bundleOf(
+                    "genre_name" to name,
+                    "type" to "album"
+                )
+            )
         }
     }
 
@@ -67,6 +80,9 @@ class AlbumFragment : Fragment() {
                 .into(albumImage)
             albumName.text = it.title
             likes.text = it.rating.toString()
+            author.text = it.authorName
+            tracks.text = "(${it.tracksCount})"
+            genre.text = it.genre
         })
 
         viewModel.tracks.observe(viewLifecycleOwner, Observer {
@@ -77,9 +93,11 @@ class AlbumFragment : Fragment() {
             when (it) {
                 true -> {
                     likeButton.isEnabled = false
+                    progress.visibility = View.VISIBLE
                 }
                 false -> {
                     likeButton.isEnabled = true
+                    progress.visibility = View.GONE
                 }
             }
         })

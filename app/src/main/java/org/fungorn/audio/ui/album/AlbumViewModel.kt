@@ -51,4 +51,20 @@ class AlbumViewModel(
             }
         )
     }
+
+    fun getAlbum(title: String) {
+        _isLoading.value = true
+        inBackground({
+            api.getAlbumByName(title)
+        },
+            onSuccess = {
+                _album.value = it
+                _isLoading.value = false
+            },
+            onError = {
+                _isLoading.value = false
+                error.value = it
+            }
+        )
+    }
 }

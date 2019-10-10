@@ -7,5 +7,6 @@ data class Album(
     val rating: Int,
     val price: Int,
     val authorName: String?,
-    val tracksCount: Int?
+    val tracksCount: Int?,
+    val genre: String
 )

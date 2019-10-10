@@ -8,5 +8,7 @@ class AlbumApi(
 ) {
     suspend fun getAlbum(albumId: Long) = null
 
+    suspend fun getAlbumByName(title: String) = null
+
     suspend fun getAlbums(): List<Album> = listOf()
 }

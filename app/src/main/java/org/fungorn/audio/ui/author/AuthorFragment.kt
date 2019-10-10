@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -66,7 +67,13 @@ class AuthorFragment : Fragment() {
         tab.addTab(ts)
 
         albumAdapter = AlbumAdapter {
-            // TODO: Navigation to Album
+            val name = (it as TextView).text.toString()
+            findNavController().navigate(
+                R.id.albumFragment,
+                bundleOf(
+                    "album_name" to name
+                )
+            )
         }
         albumsList.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -82,7 +89,14 @@ class AuthorFragment : Fragment() {
         }
 
         genre.setOnClickListener {
-            // TODO: Navigate to authors with this genres
+            val name = (it as TextView).text.toString()
+            findNavController().navigate(
+                R.id.genresFragment,
+                bundleOf(
+                    "genre_name" to name,
+                    "type" to "author"
+                )
+            )
         }
     }
 

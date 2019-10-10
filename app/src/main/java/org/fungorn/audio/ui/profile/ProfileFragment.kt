@@ -75,19 +75,3 @@ class ProfileFragment : Fragment() {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }
-
-// TODO: init Tab in Author Fragment
-//        fragment_author
-//        tab.setup()
-//        var ts = tab.newTabSpec("about")
-//        ts.setContent(R.id.about)
-//        ts.setIndicator("about")
-//        tab.addTab(ts)
-//        ts = tab.newTabSpec("tracks")
-//        ts.setContent(R.id.tracks)
-//        ts.setIndicator("tracks")
-//        tab.addTab(ts)
-//        ts = tab.newTabSpec("albums")
-//        ts.setContent(R.id.albums)
-//        ts.setIndicator("albums")
-//        tab.addTab(ts)

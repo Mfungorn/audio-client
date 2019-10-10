@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_search.*
@@ -37,7 +39,7 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         authorAdapter = AuthorAdapter {
-            // TODO: Navigation to Author
+            findNavController().navigate(R.id.authorFragment, bundleOf("author_id" to it.id))
         }
         authorsList.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -45,15 +47,15 @@ class SearchFragment : Fragment() {
         }
 
         trackAdapter = TrackAdapter {
-            // TODO: Navigation to Track
+            findNavController().navigate(R.id.trackFragment, bundleOf("track_id" to it.id))
         }
-        albumsList.apply {
+        tracksList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = trackAdapter
         }
 
         genreAdapter = GenreAdapter {
-            // TODO: Handle on genre click
+            // TODO: Handle on genre click (?)
         }
         genresList.apply {
             layoutManager = GridLayoutManager(context, 3, GridLayoutManager.HORIZONTAL, false)
