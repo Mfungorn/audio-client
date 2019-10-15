@@ -132,7 +132,7 @@
         app:layout_constraintEnd_toEndOf="@id/albumName"
         app:layout_constraintStart_toStartOf="@id/albumName"
         app:layout_constraintTop_toBottomOf="@id/linearLayout"
-        android:text="ambient" />
+        android:text="genre" />
 
     <TextView
         android:id="@+id/tracksText"

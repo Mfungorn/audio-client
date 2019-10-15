@@ -57,6 +57,15 @@ class TrackFragment : Fragment() {
         buyTrackButton.setOnClickListener {
             // TODO: set BUY_TRACK request
         }
+
+        likeButton.setOnCheckedChangeListener { _, b ->
+            val like = likes.text.toString().toInt(10)
+            if (b) {
+                likes.text = (like + 1).toString()
+            } else {
+                likes.text = (like - 1).toString()
+            }
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

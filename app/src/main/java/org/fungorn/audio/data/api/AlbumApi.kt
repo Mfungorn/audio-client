@@ -2,6 +2,7 @@ package org.fungorn.audio.data.api
 
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
+import io.ktor.client.request.parameter
 import org.fungorn.audio.BuildConfig
 import org.fungorn.audio.domain.model.Album
 import org.fungorn.audio.domain.model.Track
@@ -17,7 +18,9 @@ class AlbumApi(
     )
 
     suspend fun getAlbumByTitle(title: String) =
-        client.get<Album>("${BuildConfig.API_URL}/albums/$title")
+        client.get<Album>("${BuildConfig.API_URL}/albums") {
+            parameter("title", title)
+        }
 
     suspend fun getAlbums(): List<Album> = client.get("${BuildConfig.API_URL}/albums/popular")
 }

@@ -48,16 +48,17 @@ class LoginViewModel(
         val request = LoginRequest(login, password)
         inBackground(
             {
-            val token = api.signIn(request)
-            sharedPreferencesEditor.putString("token", token.substringAfter("Bearer "))
+                val response = api.signIn(request)
+                sharedPreferencesEditor.putString("token", response.accessToken)
+                sharedPreferencesEditor.commit()
             favoritesApi.loadFavorites()
         },
             onSuccess = {
                 signedInEvent.call() // navigation
                 it?.let { favorites ->
                     viewModelScope.launch(Dispatchers.IO) {
-                        favorites.authors.forEach { author -> authorRepository.add(author) }
-                        favorites.tracks.forEach { track -> trackRepository.add(track) }
+                        favorites.favoriteAuthors.forEach { author -> authorRepository.add(author) }
+                        favorites.favoriteCompositions.forEach { track -> trackRepository.add(track) }
                     }
                 }
             },

@@ -16,7 +16,7 @@ class GenresApi(
         "${BuildConfig.API_URL}/genres/$name"
     )
 
-    suspend fun getGenres(): List<Genre> = client.get("${BuildConfig.API_URL}/genres")
+    suspend fun getGenres(): List<Genre> = client.get("${BuildConfig.API_URL}/genres/all")
     suspend fun getGenreAuthors(name: String) = client.get<List<Author>>(
         "${BuildConfig.API_URL}/genres/$name/authors"
     )
@@ -30,7 +30,7 @@ class GenresApi(
     )
 
     suspend fun getGenresWithNameStartsWith(query: String): List<Genre> = client.get(
-        "${BuildConfig.API_URL}/genres/search   "
+        "${BuildConfig.API_URL}/genres/search"
     ) {
         parameter("q", query)
     }

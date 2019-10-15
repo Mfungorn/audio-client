@@ -93,6 +93,14 @@ class AuthorFragment : Fragment() {
                 )
             )
         }
+        likeButton.setOnCheckedChangeListener { _, b ->
+            val like = likes.text.toString().toInt(10)
+            if (b) {
+                likes.text = (like + 1).toString()
+            } else {
+                likes.text = (like - 1).toString()
+            }
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -102,8 +110,8 @@ class AuthorFragment : Fragment() {
             Glide.with(this)
                 .load(it.logo)
                 .centerCrop()
-                .fallback(R.drawable.ic_face_accent_150dp)
-                .error(R.drawable.ic_face_accent_150dp)
+                .fallback(R.drawable.rect)
+                .error(R.drawable.rect)
                 .into(authorImage)
             authorName.text = it.name
             likes.text = it.rating.toString()

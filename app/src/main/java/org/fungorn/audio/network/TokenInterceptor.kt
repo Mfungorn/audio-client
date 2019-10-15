@@ -9,9 +9,9 @@ class TokenInterceptor(
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val token = sharedPreferences.getString("token", null)
+        val token = sharedPreferences.getString("token", "")
 
-        return if (token == null) {
+        return if (token.isNullOrEmpty()) {
             chain.proceed(chain.request())
         } else {
             val authenticatedRequest = chain.request()

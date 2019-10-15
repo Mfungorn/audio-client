@@ -24,8 +24,10 @@ class AuthorApi(
     )
 
     suspend fun getAuthorByName(name: String) = client.get<Author>(
-        "${BuildConfig.API_URL}/authors/$name"
-    )
+        "${BuildConfig.API_URL}/authors"
+    ) {
+        parameter("name", name)
+    }
 
     suspend fun getAuthors(): List<Author> = client.get(
         "${BuildConfig.API_URL}/authors/popular"

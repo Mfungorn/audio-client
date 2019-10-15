@@ -13,9 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="userPortrait">
             <intent-filter>
@@ -26,8 +27,9 @@
         </activity>
         <activity
             android:theme="@style/AppTheme"
-            android:name=".ui.LoginActivity"
-            android:screenOrientation="userPortrait" />
+            android:name=".ui.MainActivity"
+            android:screenOrientation="userPortrait"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>

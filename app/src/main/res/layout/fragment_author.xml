@@ -109,7 +109,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif-light"
-        android:text="ambient"
+        android:text="genre"
         android:clickable="true"
         android:focusable="true"
         android:textColor="@color/color_clickable_secondary_text"
@@ -160,7 +160,7 @@
                         android:paddingStart="32dp"
                         android:paddingTop="24dp"
                         android:paddingEnd="32dp"
-                        android:text="@string/lorem"
+                        tools:text="@string/lorem"
                         android:textColor="@color/colorGrey"
                         android:textSize="18sp" />
                 </RelativeLayout>
