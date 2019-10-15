@@ -17,7 +17,9 @@ class TrackRepository(
         title = track.title,
         price = track.price,
         duration = track.duration,
-        rating = track.rating
+        rating = track.rating,
+        authorName = track.authorName,
+        genre = track.genre
     )
 
     private fun toTrackModel(entity: TrackEntity) = Track(
@@ -25,6 +27,9 @@ class TrackRepository(
         title = entity.title,
         price = entity.price,
         duration = entity.duration,
-        rating = entity.rating
+        rating = entity.rating,
+        authorName = entity.authorName,
+        genre = entity.genre,
+        cover = null
     )
 }

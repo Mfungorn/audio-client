@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
@@ -34,7 +35,15 @@ class ProfileFragment : Fragment() {
         }
 
         addBalance.setOnClickListener {
-            // TODO: Show Payment Dialog
+            context?.let { context ->
+                AlertDialog.Builder(context)
+                    .setTitle("Account dialog")
+                    .setMessage("Do you want to deposit your account?")
+                    .setPositiveButton("Proceed") { dialog, _ -> dialog.dismiss() }
+                    .setNegativeButton("Abort") { dialog, _ -> dialog.dismiss() }
+                    .setIcon(R.drawable.ic_add_balance_accent_24dp)
+                    .show()
+            }
         }
     }
 

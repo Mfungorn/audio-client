@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.fungorn.audio.data.api.GenresApi
-import org.fungorn.audio.data.db.repository.AuthorRepository
-import org.fungorn.audio.data.db.repository.TrackRepository
 import org.fungorn.audio.domain.model.Album
 import org.fungorn.audio.domain.model.Author
 import org.fungorn.audio.domain.model.Track
@@ -34,7 +32,7 @@ class GenresViewModel(
     fun loadAuthors(genreName: String) {
         _isLoading.value = true
         inBackground({
-            _authors.postValue(withContext(Dispatchers.IO) { api.getAuthors(genreName) })
+            _authors.postValue(withContext(Dispatchers.IO) { api.getGenreAuthors(genreName) })
         },
             onSuccess = {
                 _isLoading.value = false
@@ -49,7 +47,7 @@ class GenresViewModel(
     fun loadAlbums(genreName: String) {
         _isLoading.value = true
         inBackground({
-            _albums.postValue(withContext(Dispatchers.IO) { api.getAlbums(genreName) })
+            _albums.postValue(withContext(Dispatchers.IO) { api.getGenreAlbums(genreName) })
         },
             onSuccess = {
                 _isLoading.value = false
@@ -64,7 +62,7 @@ class GenresViewModel(
     fun loadTracks(genreName: String) {
         _isLoading.value = true
         inBackground({
-            _tracks.postValue(withContext(Dispatchers.IO) { api.getTracks(genreName) })
+            _tracks.postValue(withContext(Dispatchers.IO) { api.getGenreTracks(genreName) })
         },
             onSuccess = {
                 _isLoading.value = false

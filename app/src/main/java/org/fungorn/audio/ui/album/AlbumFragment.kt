@@ -34,12 +34,12 @@ class AlbumFragment : Fragment() {
         id = arguments?.getLong("album_id")
         id?.let {
             viewModel.getAlbum(it)
+            viewModel.getContent(it)
         }
         name = arguments?.getString("album_name")
         name?.let {
             viewModel.getAlbum(it)
         }
-        viewModel.getContent()
 
         val root = inflater.inflate(R.layout.fragment_album, container, false)
         return root

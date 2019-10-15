@@ -16,12 +16,16 @@ class AuthorRepository(
     private fun toAuthorEntity(author: Author) = AuthorEntity(
         id = author.id,
         name = author.name,
-        rating = author.rating
+        rating = author.rating,
+        bio = author.bio,
+        logo = author.logo
     )
 
     private fun toAuthorModel(entity: AuthorEntity) = Author(
         id = entity.id,
         name = entity.name,
-        rating = entity.rating
+        rating = entity.rating,
+        bio = entity.bio,
+        logo = entity.logo
     )
 }

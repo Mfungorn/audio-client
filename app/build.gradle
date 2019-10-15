@@ -25,6 +25,7 @@ android {
                         "room.expandProjection":"true"]
             }
         }
+        buildConfigField "String", "API_URL", '"http://192.168.0.5:8080"'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

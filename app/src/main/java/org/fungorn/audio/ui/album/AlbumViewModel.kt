@@ -6,15 +6,13 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.fungorn.audio.data.api.AlbumApi
-import org.fungorn.audio.data.api.TrackApi
 import org.fungorn.audio.domain.model.Album
 import org.fungorn.audio.domain.model.Track
 import org.fungorn.audio.utils.SingleLiveEvent
 import org.fungorn.audio.utils.inBackground
 
 class AlbumViewModel(
-    private val api: AlbumApi,
-    private val trackApi: TrackApi
+    private val api: AlbumApi
 ) : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>().apply { value = false }
     val isLoading: LiveData<Boolean> = _isLoading
@@ -27,8 +25,9 @@ class AlbumViewModel(
     private val _tracks = MutableLiveData<List<Track>>()
     val tracks: LiveData<List<Track>> = _tracks
 
-    fun getContent() = inBackground({
-        _tracks.postValue(withContext(Dispatchers.IO) { trackApi.getTracks() })
+    fun getContent(albumId: Long) = inBackground(
+        {
+            _tracks.postValue(withContext(Dispatchers.IO) { api.getAlbumTracks(albumId) })
     },
         onSuccess = { },
         onError = {
@@ -55,7 +54,7 @@ class AlbumViewModel(
     fun getAlbum(title: String) {
         _isLoading.value = true
         inBackground({
-            api.getAlbumByName(title)
+            api.getAlbumByTitle(title)
         },
             onSuccess = {
                 _album.value = it

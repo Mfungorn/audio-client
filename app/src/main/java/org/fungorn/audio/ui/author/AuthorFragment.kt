@@ -37,13 +37,14 @@ class AuthorFragment : Fragment() {
         id?.let {
             viewModel.getAuthor(it)
             viewModel.checkIsFavorite(it)
+
+            viewModel.getContent(it)
         }
         name = arguments?.getString("author_name")
         name?.let {
             viewModel.getAuthor(it)
             viewModel.checkIsFavorite(it)
         }
-        viewModel.getContent()
 
         val root = inflater.inflate(R.layout.fragment_author, container, false)
         return root
@@ -67,13 +68,7 @@ class AuthorFragment : Fragment() {
         tab.addTab(ts)
 
         albumAdapter = AlbumAdapter {
-            val name = (it as TextView).text.toString()
-            findNavController().navigate(
-                R.id.albumFragment,
-                bundleOf(
-                    "album_name" to name
-                )
-            )
+            findNavController().navigate(R.id.albumFragment, bundleOf("album_id" to it.id))
         }
         albumsList.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

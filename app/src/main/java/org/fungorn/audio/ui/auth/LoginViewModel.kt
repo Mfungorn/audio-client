@@ -10,8 +10,9 @@ import org.fungorn.audio.data.api.LoginApi
 import org.fungorn.audio.data.db.repository.AuthorRepository
 import org.fungorn.audio.data.db.repository.TrackRepository
 import org.fungorn.audio.domain.model.LoginRequest
-import org.fungorn.audio.utils.Coroutines
+import org.fungorn.audio.domain.model.SignUpRequest
 import org.fungorn.audio.utils.SingleLiveEvent
+import org.fungorn.audio.utils.inBackground
 
 class LoginViewModel(
     private val sharedPreferencesEditor: SharedPreferences.Editor,
@@ -22,10 +23,31 @@ class LoginViewModel(
 ) : ViewModel() {
     val error = SingleLiveEvent<String>().apply { value = null }
     val signedInEvent = SingleLiveEvent<Unit>()
+    val signedUpEvent = SingleLiveEvent<Unit>()
+
+    val signUpRequest = SignUpRequest(
+        name = "",
+        email = "",
+        password = ""
+    )
+
+    fun signUp() {
+        inBackground({
+            api.signUp(signUpRequest)
+        },
+            onSuccess = {
+                signedUpEvent.call()
+            },
+            onError = {
+                error.value = it.message
+            }
+        )
+    }
 
     fun signIn(login: String, password: String) {
         val request = LoginRequest(login, password)
-        Coroutines.ioThenMain({
+        inBackground(
+            {
             val token = api.signIn(request)
             sharedPreferencesEditor.putString("token", token.substringAfter("Bearer "))
             favoritesApi.loadFavorites()

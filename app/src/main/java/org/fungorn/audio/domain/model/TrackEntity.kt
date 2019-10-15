@@ -9,5 +9,7 @@ data class TrackEntity(
     val title: String,
     val price: Int,
     val duration: Int,
-    val rating: Int
+    val rating: Int,
+    val authorName: String,
+    val genre: String
 )

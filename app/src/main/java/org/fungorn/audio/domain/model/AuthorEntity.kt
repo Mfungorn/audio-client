@@ -7,5 +7,7 @@ import androidx.room.PrimaryKey
 data class AuthorEntity(
     @PrimaryKey val id: Long,
     val name: String,
-    val rating: Int = 0
+    val rating: Int = 0,
+    val logo: String = "",
+    val bio: String = ""
 )

@@ -5,5 +5,5 @@ data class Author(
     val name: String,
     val rating: Int,
     val logo: String = "",
-    val bio: String
+    val bio: String = ""
 )

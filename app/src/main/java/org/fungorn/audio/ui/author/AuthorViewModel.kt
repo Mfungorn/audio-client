@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.fungorn.audio.data.api.AlbumApi
 import org.fungorn.audio.data.api.AuthorApi
-import org.fungorn.audio.data.api.TrackApi
 import org.fungorn.audio.data.db.repository.AuthorRepository
 import org.fungorn.audio.domain.model.Album
 import org.fungorn.audio.domain.model.Author
@@ -17,8 +15,6 @@ import org.fungorn.audio.utils.inBackground
 
 class AuthorViewModel(
     private val api: AuthorApi,
-    private val albumApi: AlbumApi,
-    private val trackApi: TrackApi,
     private val repository: AuthorRepository
 ) : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>().apply { value = false }
@@ -37,9 +33,10 @@ class AuthorViewModel(
 
     val isFavorite = SingleLiveEvent<Boolean>().apply { value = false }
 
-    fun getContent() = inBackground({
-        _albums.postValue(withContext(Dispatchers.IO) { albumApi.getAlbums() })
-        _tracks.postValue(withContext(Dispatchers.IO) { trackApi.getTracks() })
+    fun getContent(authorId: Long) = inBackground(
+        {
+            _albums.postValue(withContext(Dispatchers.IO) { api.getAuthorAlbums(authorId) })
+            _tracks.postValue(withContext(Dispatchers.IO) { api.getAuthorTracks(authorId) })
     },
         onSuccess = { },
         onError = {
@@ -69,7 +66,7 @@ class AuthorViewModel(
             api.getAuthorByName(name)
         },
             onSuccess = {
-                _author.value = it
+                _author.value = it.also { getContent(it!!.id) }
                 _isLoading.value = false
             },
             onError = {
