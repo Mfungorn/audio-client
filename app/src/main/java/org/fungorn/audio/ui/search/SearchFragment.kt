@@ -41,7 +41,7 @@ class SearchFragment : Fragment() {
         authorAdapter = AuthorAdapter {
             findNavController().navigate(R.id.authorFragment, bundleOf("author_id" to it.id))
         }
-        authorsList.apply {
+        authorsResultList.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = authorAdapter
         }
@@ -49,7 +49,7 @@ class SearchFragment : Fragment() {
         trackAdapter = TrackAdapter {
             findNavController().navigate(R.id.trackFragment, bundleOf("track_id" to it.id))
         }
-        tracksList.apply {
+        tracksResultList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = trackAdapter
         }
@@ -57,19 +57,34 @@ class SearchFragment : Fragment() {
         genreAdapter = GenreAdapter {
             // TODO: Handle on genre click (?)
         }
-        genresList.apply {
+        genresResultList.apply {
             layoutManager = GridLayoutManager(context, 3, GridLayoutManager.HORIZONTAL, false)
             adapter = genreAdapter
         }
 
+//        searchView.setOnQueryTextListener(
+//            object : SearchView.OnQueryTextListener {
+//                override fun onQueryTextSubmit(query: String?): Boolean {
+//                    query?.let {
+//                        it.takeIf { it.isNotEmpty() }
+//                            ?.apply { viewModel.globalSearch(this) }
+//                            ?: viewModel.resetSearch()
+//                    }
+//                    return true
+//                }
+//
+//                override fun onQueryTextChange(newText: String?): Boolean {
+//                    return true
+//                }
+//            }
+//        )
+
         searchView.setOnQueryTextListener(
             DebouncingQueryTextListener(viewLifecycleOwner.lifecycle) { newQuery ->
                 newQuery?.let {
-                    if (it.isEmpty()) {
-                        viewModel.resetSearch()
-                    } else {
-                        viewModel.globalSearch(it)
-                    }
+                    it.takeIf { it.isNotEmpty() }
+                        ?.apply { viewModel.globalSearch(this) }
+                        ?: viewModel.resetSearch()
                 }
             }
         )

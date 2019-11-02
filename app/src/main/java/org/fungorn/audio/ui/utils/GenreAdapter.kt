@@ -16,6 +16,10 @@ class GenreAdapter(
 ) : RecyclerView.Adapter<GenreAdapter.GenreViewHolder>() {
     private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
 
+    init {
+        differ.submitList(listOf())
+    }
+
     private val colors = arrayOf(
         R.color.colorAmber,
         R.color.colorGrey,
@@ -28,6 +32,7 @@ class GenreAdapter(
 
     fun submitGenres(genres: List<Genre>) {
         differ.submitList(genres)
+        notifyDataSetChanged()
     }
 
     override fun getItemCount() = differ.currentList.size

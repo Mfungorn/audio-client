@@ -36,21 +36,15 @@ class SearchViewModel(
     fun globalSearch(query: String) {
         _isLoading.value = true
         inBackground({
-            _authors.postValue(withContext(Dispatchers.IO) {
-                authorApi.getAuthorsWithNameStartsWith(
-                    query
-                )
-            })
-            _tracks.postValue(withContext(Dispatchers.IO) {
-                trackApi.getTracksWithTitleStartsWith(
-                    query
-                )
-            })
-            _genres.postValue(withContext(Dispatchers.IO) {
-                genresApi.getGenresWithNameStartsWith(
-                    query
-                )
-            })
+            val authors =
+                withContext(Dispatchers.IO) { authorApi.getAuthorsWithNameStartsWith(query) }
+            _authors.postValue(authors)
+            val tracks =
+                withContext(Dispatchers.IO) { trackApi.getTracksWithTitleStartsWith(query) }
+            _tracks.postValue(tracks)
+            val genres =
+                withContext(Dispatchers.IO) { genresApi.getGenresWithNameStartsWith(query) }
+            _genres.postValue(genres)
         },
             onSuccess = {
                 _isLoading.value = false

@@ -16,8 +16,13 @@ class AlbumAdapter(
 ) : RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>() {
     private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
 
+    init {
+        differ.submitList(listOf())
+    }
+
     fun submitAlbums(albums: List<Album>) {
         differ.submitList(albums)
+        notifyDataSetChanged()
     }
 
     override fun getItemCount() = differ.currentList.size

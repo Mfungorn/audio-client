@@ -18,7 +18,8 @@ internal class DebouncingQueryTextListener(
     private var searchJob: Job? = null
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        return false
+        onDebouncingQueryTextChange(query)
+        return true
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
@@ -29,6 +30,6 @@ internal class DebouncingQueryTextListener(
                 onDebouncingQueryTextChange(newText)
             }
         }
-        return false
+        return true
     }
 }

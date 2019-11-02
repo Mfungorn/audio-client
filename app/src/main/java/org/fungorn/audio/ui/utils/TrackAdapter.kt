@@ -15,8 +15,13 @@ class TrackAdapter(
 ) : RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
     private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
 
+    init {
+        differ.submitList(listOf())
+    }
+
     fun submitTracks(tracks: List<Track>) {
         differ.submitList(tracks)
+        notifyDataSetChanged()
     }
 
     override fun getItemCount() = differ.currentList.size
