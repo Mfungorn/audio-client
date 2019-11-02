@@ -3,8 +3,6 @@ package org.fungorn.audio.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.fungorn.audio.data.api.AlbumApi
 import org.fungorn.audio.data.api.AuthorApi
 import org.fungorn.audio.data.api.GenresApi
@@ -19,8 +17,14 @@ class MainViewModel(
     private val albumApi: AlbumApi,
     private val genresApi: GenresApi
 ) : ViewModel() {
-    private val _isLoading = MutableLiveData<Boolean>().apply { value = false }
-    val isLoading: LiveData<Boolean> = _isLoading
+    private val _isAuthorsLoading = MutableLiveData<Boolean>().apply { value = false }
+    val isAuthorsLoading: LiveData<Boolean> = _isAuthorsLoading
+
+    private val _isAlbumsLoading = MutableLiveData<Boolean>().apply { value = false }
+    val isAlbumsLoading: LiveData<Boolean> = _isAlbumsLoading
+
+    private val _isGenresLoading = MutableLiveData<Boolean>().apply { value = false }
+    val isGenresLoading: LiveData<Boolean> = _isGenresLoading
 
     val error = SingleLiveEvent<Throwable>()
 
@@ -33,58 +37,61 @@ class MainViewModel(
     private val _genres = MutableLiveData<List<Genre>>().apply { value = listOf() }
     val genres: LiveData<List<Genre>> = _genres
 
-    fun getContent() {
-        _isLoading.value = true
-        inBackground({
-            _authors.postValue(withContext(Dispatchers.IO) { authorApi.getAuthors() })
-            _albums.postValue(withContext(Dispatchers.IO) { albumApi.getAlbums() })
-            _genres.postValue(withContext(Dispatchers.IO) { genresApi.getGenres() })
-        },
-            onSuccess = {
-                _isLoading.value = false
-            },
-            onError = {
-                _isLoading.value = false
-                error.value = it
-            }
-        )
-    }
-
-    fun content() {
-        getAuthors()
-        getAlbums()
-        getGenres()
-    }
+//    fun getContent() {
+//        _isLoading.value = true
+//        inBackground({
+//            _albums.postValue(withContext(Dispatchers.IO) { albumApi.getAlbums() })
+//            _authors.postValue(withContext(Dispatchers.IO) { authorApi.getAuthors() })
+//            _genres.postValue(withContext(Dispatchers.IO) { genresApi.getGenres() })
+//        },
+//            onSuccess = {
+//                _isLoading.value = false
+//            },
+//            onError = {
+//                _isLoading.value = false
+//                error.value = it
+//            }
+//        )
+//    }
 
     fun getAuthors() = inBackground({
+        _isAuthorsLoading.postValue(true)
         authorApi.getAuthors()
     },
         onSuccess = {
+            _isAuthorsLoading.value = false
             _authors.value = it
         },
         onError = {
+            _isAuthorsLoading.value = false
             error.value = it
         }
     )
 
     fun getAlbums() = inBackground({
+        _isAlbumsLoading.postValue(true)
         albumApi.getAlbums()
     },
         onSuccess = {
+            _isAlbumsLoading.value = false
             _albums.value = it
         },
         onError = {
+            _isAlbumsLoading.value = false
             error.value = it
         }
     )
 
     fun getGenres() = inBackground({
+        _isGenresLoading.postValue(true)
         genresApi.getGenres()
     },
         onSuccess = {
+            _isGenresLoading.value = false
             _genres.value = it
         },
         onError = {
+            _isGenresLoading.value = false
             error.value = it
         }
     )

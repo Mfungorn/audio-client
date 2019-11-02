@@ -43,7 +43,6 @@
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintGuide_percent="0.15">
-
         </Constraint>
         <Constraint
             android:id="@id/profileButton"

@@ -24,15 +24,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-medium"
         android:text="@string/artists_text"
         android:textColor="@color/colorPrimaryText"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+        app:layout_constraintTop_toBottomOf="@id/searchView" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/authorsList"
+        android:id="@+id/authorsResultList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -53,10 +54,10 @@
         android:textColor="@color/colorPrimaryText"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/authorsList" />
+        app:layout_constraintTop_toBottomOf="@id/authorsResultList" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tracksList"
+        android:id="@+id/tracksResultList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -79,10 +80,10 @@
         android:textColor="@color/colorPrimaryText"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tracksList" />
+        app:layout_constraintTop_toBottomOf="@id/tracksResultList" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/genresList"
+        android:id="@+id/genresResultList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

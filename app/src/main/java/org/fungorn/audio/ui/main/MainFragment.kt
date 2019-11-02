@@ -25,12 +25,18 @@ class MainFragment : Fragment() {
     private var albumAdapter: AlbumAdapter? = null
     private var genreAdapter: GenreAdapter? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.getAuthors()
+        viewModel.getAlbums()
+        viewModel.getGenres()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel.getContent() // content()
         val root = inflater.inflate(R.layout.fragment_main, container, false)
         return root
     }
@@ -44,6 +50,7 @@ class MainFragment : Fragment() {
         authorsList.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = authorAdapter
+            scrollBy(0, 0)
         }
 
         albumAdapter = AlbumAdapter {
@@ -52,6 +59,7 @@ class MainFragment : Fragment() {
         albumsList.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = albumAdapter
+            scrollBy(0, 0)
         }
 
         genreAdapter = GenreAdapter {
@@ -60,6 +68,7 @@ class MainFragment : Fragment() {
         genresList.apply {
             layoutManager = GridLayoutManager(context, 3, GridLayoutManager.HORIZONTAL, false)
             adapter = genreAdapter
+            scrollBy(0, 0)
         }
 
         profileButton.setOnClickListener {
@@ -82,13 +91,38 @@ class MainFragment : Fragment() {
             genreAdapter?.submitGenres(it)
         })
 
-        viewModel.isLoading.observe(viewLifecycleOwner, Observer {
+        viewModel.isAuthorsLoading.observe(viewLifecycleOwner, Observer {
             when (it) {
                 true -> {
-                    progress.visibility = View.VISIBLE
+                    authorsProgress.visibility = View.VISIBLE
                 }
                 false -> {
-                    progress.visibility = View.GONE
+                    authorsProgress.visibility = View.GONE
+                    authorsList.scrollBy(0, 0)
+                }
+            }
+        })
+
+        viewModel.isAlbumsLoading.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                true -> {
+                    albumsProgress.visibility = View.VISIBLE
+                }
+                false -> {
+                    albumsProgress.visibility = View.GONE
+                    albumsList.scrollBy(0, 0)
+                }
+            }
+        })
+
+        viewModel.isGenresLoading.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                true -> {
+                    genresProgress.visibility = View.VISIBLE
+                }
+                false -> {
+                    genresProgress.visibility = View.GONE
+                    genresList.scrollBy(0, 0)
                 }
             }
         })

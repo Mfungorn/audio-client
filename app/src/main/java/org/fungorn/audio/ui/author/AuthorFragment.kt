@@ -38,7 +38,8 @@ class AuthorFragment : Fragment() {
             viewModel.getAuthor(it)
             viewModel.checkIsFavorite(it)
 
-            viewModel.getContent(it)
+            viewModel.getAuthorTracks(it)
+            viewModel.getAuthorAlbums(it)
         }
         name = arguments?.getString("author_name")
         name?.let {
@@ -134,10 +135,36 @@ class AuthorFragment : Fragment() {
             when (it) {
                 true -> {
                     likeButton.isEnabled = false
-                    progress.visibility = View.VISIBLE
+                    authorProgress.visibility = View.VISIBLE
                 }
                 false -> {
-                    progress.visibility = View.GONE
+                    authorProgress.visibility = View.GONE
+                    likeButton.isEnabled = true
+                }
+            }
+        })
+
+        viewModel.isTracksLoading.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                true -> {
+                    likeButton.isEnabled = false
+                    tracksProgress.visibility = View.VISIBLE
+                }
+                false -> {
+                    tracksProgress.visibility = View.GONE
+                    likeButton.isEnabled = true
+                }
+            }
+        })
+
+        viewModel.isAlbumsLoading.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                true -> {
+                    likeButton.isEnabled = false
+                    albumsProgress.visibility = View.VISIBLE
+                }
+                false -> {
+                    albumsProgress.visibility = View.GONE
                     likeButton.isEnabled = true
                 }
             }

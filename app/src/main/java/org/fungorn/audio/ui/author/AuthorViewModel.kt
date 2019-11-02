@@ -20,6 +20,12 @@ class AuthorViewModel(
     private val _isLoading = MutableLiveData<Boolean>().apply { value = false }
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _isAlbumsLoading = MutableLiveData<Boolean>().apply { value = false }
+    val isAlbumsLoading: LiveData<Boolean> = _isAlbumsLoading
+
+    private val _isTracksLoading = MutableLiveData<Boolean>().apply { value = false }
+    val isTracksLoading: LiveData<Boolean> = _isTracksLoading
+
     val error = SingleLiveEvent<Throwable>()
 
     private val _author = MutableLiveData<Author>()
@@ -33,13 +39,34 @@ class AuthorViewModel(
 
     val isFavorite = SingleLiveEvent<Boolean>().apply { value = false }
 
-    fun getContent(authorId: Long) = inBackground(
-        {
-            _albums.postValue(withContext(Dispatchers.IO) { api.getAuthorAlbums(authorId) })
-            _tracks.postValue(withContext(Dispatchers.IO) { api.getAuthorTracks(authorId) })
+    fun getContent(authorId: Long) {
+        getAuthorAlbums(authorId)
+        getAuthorTracks(authorId)
+    }
+
+    fun getAuthorTracks(authorId: Long) = inBackground({
+        _isTracksLoading.postValue(true)
+        _tracks.postValue(withContext(Dispatchers.IO) { api.getAuthorTracks(authorId) })
     },
-        onSuccess = { },
+        onSuccess = {
+            _isTracksLoading.value = false
+        },
         onError = {
+            _isTracksLoading.value = false
+            error.value = it
+        }
+    )
+
+    fun getAuthorAlbums(authorId: Long) = inBackground(
+        {
+            _isAlbumsLoading.postValue(true)
+            _albums.postValue(withContext(Dispatchers.IO) { api.getAuthorAlbums(authorId) })
+    },
+        onSuccess = {
+            _isAlbumsLoading.value = false
+        },
+        onError = {
+            _isAlbumsLoading.value = false
             error.value = it
         }
     )
