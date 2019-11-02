@@ -1,5 +1,6 @@
 package org.fungorn.audio.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_profile.*
 import org.fungorn.audio.R
+import org.fungorn.audio.ui.LoginActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -32,6 +34,8 @@ class ProfileFragment : Fragment() {
 
         logout.setOnClickListener {
             viewModel.logout()
+            val intent = Intent(context, LoginActivity::class.java)
+            startActivity(intent)
         }
 
         addBalance.setOnClickListener {
