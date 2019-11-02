@@ -30,7 +30,7 @@ class AuthorApi(
     }
 
     suspend fun getAuthors(): List<Author> = client.get(
-        "${BuildConfig.API_URL}/authors/popular"
+        "${BuildConfig.API_URL}/authors/all"
     )
 
     suspend fun getAuthorsWithNameStartsWith(query: String): List<Author> = client.get(

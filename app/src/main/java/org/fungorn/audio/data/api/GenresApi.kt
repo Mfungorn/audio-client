@@ -17,6 +17,7 @@ class GenresApi(
     )
 
     suspend fun getGenres(): List<Genre> = client.get("${BuildConfig.API_URL}/genres/all")
+
     suspend fun getGenreAuthors(name: String) = client.get<List<Author>>(
         "${BuildConfig.API_URL}/genres/$name/authors"
     )
